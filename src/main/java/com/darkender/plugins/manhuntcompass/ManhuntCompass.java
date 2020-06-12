@@ -105,11 +105,16 @@ public class ManhuntCompass extends JavaPlugin implements Listener
     public void onPlayerDeath(PlayerDeathEvent event)
     {
         event.getDrops().removeIf(itemStack -> itemStack != null && itemStack.getType() == Material.COMPASS);
+        event.getEntity().setMetadata("compass-died", new FixedMetadataValue(this, true));
     }
     
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event)
     {
-        event.getPlayer().getInventory().addItem(new ItemStack(Material.COMPASS, 1));
+        if(event.getPlayer().hasMetadata("compass-died"))
+        {
+            event.getPlayer().removeMetadata("compass-died", this);
+            event.getPlayer().getInventory().addItem(new ItemStack(Material.COMPASS, 1));
+        }
     }
 }
