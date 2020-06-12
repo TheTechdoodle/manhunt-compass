@@ -1,0 +1,5 @@
+name: ManhuntCompass
+version: ${project.version}
+main: com.darkender.plugins.manhuntcompass.ManhuntCompass
+api-version: 1.14
+author: Techdoodle
