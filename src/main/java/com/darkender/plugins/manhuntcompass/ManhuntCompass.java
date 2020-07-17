@@ -77,11 +77,15 @@ public class ManhuntCompass extends JavaPlugin implements Listener
                     if(current != null)
                     {
                         Player next = Bukkit.getPlayer(current);
-                        if(next != null)
+                        if(canTrack(event.getPlayer(), next))
                         {
                             event.getPlayer().sendMessage(ChatColor.GOLD + "Tracking: " + next.getName() + " (" +
                                     Math.floor(next.getLocation().distance(event.getPlayer().getLocation())) + " blocks)");
                             event.getPlayer().setCompassTarget(next.getLocation());
+                        }
+                        else
+                        {
+                            event.getPlayer().sendMessage(ChatColor.RED + "Cannot track player");
                         }
                     }
                 }
