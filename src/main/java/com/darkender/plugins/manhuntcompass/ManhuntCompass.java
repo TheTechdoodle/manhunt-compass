@@ -59,8 +59,13 @@ public class ManhuntCompass extends JavaPlugin implements Listener
     }
     
     @EventHandler
-    public void onInteract(PlayerInteractEvent event)
+    private void onInteract(PlayerInteractEvent event)
     {
+        if(!event.getPlayer().hasPermission("manhuntcompass.use"))
+        {
+            return;
+        }
+        
         if(event.getHand() == EquipmentSlot.HAND)
         {
             if(event.getItem() != null && event.getItem().getType() == Material.COMPASS)
@@ -105,15 +110,15 @@ public class ManhuntCompass extends JavaPlugin implements Listener
         }
     }
     
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event)
+    @EventHandler(ignoreCancelled = true)
+    private void onPlayerDeath(PlayerDeathEvent event)
     {
         event.getDrops().removeIf(itemStack -> itemStack != null && itemStack.getType() == Material.COMPASS);
         event.getEntity().setMetadata("compass-died", new FixedMetadataValue(this, true));
     }
     
-    @EventHandler
-    public void onRespawn(PlayerRespawnEvent event)
+    @EventHandler(ignoreCancelled = true)
+    private void onRespawn(PlayerRespawnEvent event)
     {
         if(event.getPlayer().hasMetadata("compass-died"))
         {
